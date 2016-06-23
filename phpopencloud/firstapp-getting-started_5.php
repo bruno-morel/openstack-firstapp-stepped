@@ -21,10 +21,9 @@ $openstack = new OpenStack\OpenStack([
 ]);
 
 #step4
-printf( "Listing networks...\n" );
+echo( "Listing networks...\n" );
 $neutron = $openstack->networkingV2();
-$networks = $neutron->listNetworks();
-foreach ($networks as $network) {
+foreach ($neutron->listNetworks() as $network) {
     echo $network->id . "\t" . $network->name;
     if( strpos( $network->name, "WAN" ) > -1 )
       echo ' ---> this is our WAN lan';
@@ -32,4 +31,4 @@ foreach ($networks as $network) {
     echo "\n";
 }
 
-printf( "Done! Congrats\n" );
+echo( "Done! Congrats\n" );

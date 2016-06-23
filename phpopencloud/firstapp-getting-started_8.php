@@ -20,25 +20,13 @@ $openstack = new OpenStack\OpenStack([
     ]
 ]);
 
-#step4
-$flavor_id = 'A1.1';
 
-$image_id = "3c76334f-9644-4666-ac3c-fa090f175655";
-
-#step5
-echo( "Listing networks...\n" );
-$neutron = $openstack->networkingV2();
-foreach ($neutron->listNetworks() as $network) {
-    if( strpos( $network->name, "WAN" ) > -1 )
-      $idPublicWan = $network->id;
-}
-
+echo( "Deleting test servers \n" );
 $nova = $openstack->computeV2();
-$instance = $nova->createServer([
-    'name'     => 'test for phpOpenCloud',
-    'imageId'  => $image_id,
-    'flavorId' => $flavor_id,
-    'networks'  => [ 0 => [ 'uuid' => $idPublicWan ] ]
-]);
-print_r( $instance );
+foreach ($nova->listServers() as $server) {
+  if( strpos( $server->name, "phpOpenCloud") ) {
+    $server->delete();
+    echo " \tdeleting server with name : " . $server->name . "\n";
+  }
+}
 echo( "Done! Congrats\n" );

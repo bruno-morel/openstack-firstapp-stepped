@@ -20,25 +20,32 @@ $openstack = new OpenStack\OpenStack([
     ]
 ]);
 
-#step4
-$flavor_id = 'A1.1';
+# step-9
+echo 'Checking for existing SSH key pair...';
+$keypair_name     = 'demokey';
+$pub_key_file     = '/Users/bmorel/.ssh/bmorel@internap.com-id_rsa.pub';
 
-$image_id = "3c76334f-9644-4666-ac3c-fa090f175655";
-
-#step5
-echo( "Listing networks...\n" );
-$neutron = $openstack->networkingV2();
-foreach ($neutron->listNetworks() as $network) {
-    if( strpos( $network->name, "WAN" ) > -1 )
-      $idPublicWan = $network->id;
-}
 
 $nova = $openstack->computeV2();
-$instance = $nova->createServer([
-    'name'     => 'test for phpOpenCloud',
-    'imageId'  => $image_id,
-    'flavorId' => $flavor_id,
-    'networks'  => [ 0 => [ 'uuid' => $idPublicWan ] ]
-]);
-print_r( $instance );
+$keypair_exists = False;
+foreach( $nova->listKeypairs() as $keypair ) {
+    if ($keypair->getName() == $keypair_name) {
+        $keypair_exists = True;
+    }
+}
+
+if ($keypair_exists) {
+    echo 'Keypair ' . $keypair_name . ' already exists. Skipping import.';
+} else {
+    echo 'adding keypair...';
+    $nova->keypair()->create(array(
+       'name' => $keypair_name,
+       'publicKey' => file_get_contents($pub_key_file)
+   ));
+}
+
+foreach ($nova->listKeypairs() as $keypair) {
+    echo $keypair->getName() . "\n";
+}
+
 echo( "Done! Congrats\n" );

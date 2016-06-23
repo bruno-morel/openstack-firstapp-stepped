@@ -23,8 +23,7 @@ $openstack = new OpenStack\OpenStack([
 #step3
 echo( "Listing flavors...\n" );
 $nova = $openstack->computeV2();
-$flavors = $nova->listFlavors();
-foreach ($flavors as $flavor) {
+foreach ($nova->listFlavors() as $flavor) {
     echo $flavor->id . "\t" . $flavor->name . "\n";
 }
 

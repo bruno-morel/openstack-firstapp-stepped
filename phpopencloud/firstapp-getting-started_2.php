@@ -23,8 +23,7 @@ $openstack = new OpenStack\OpenStack([
 # step-2
 echo( "Listing images...\n" );
 $glance = $openstack->imagesV2();
-$images = $glance->listImages();
-foreach ($images as $image) {
+foreach ($glance->listImages() as $image) {
     echo $image->id . "\t" . $image->name . "\n";
 }
 

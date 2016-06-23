@@ -35,10 +35,15 @@ foreach ($neutron->listNetworks() as $network) {
 
 $nova = $openstack->computeV2();
 $instance = $nova->createServer([
-    'name'     => 'test for phpOpenCloud',
+    'name'     => 'second test for phpOpenCloud',
     'imageId'  => $image_id,
     'flavorId' => $flavor_id,
     'networks'  => [ 0 => [ 'uuid' => $idPublicWan ] ]
 ]);
 print_r( $instance );
+
+echo( "Listing servers \n" );
+foreach ($nova->listServers() as $server) {
+  echo $server->id . "\t" . $server->name . "\n";
+}
 echo( "Done! Congrats\n" );
