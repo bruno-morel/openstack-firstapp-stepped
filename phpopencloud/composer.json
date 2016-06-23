@@ -1,0 +1,20 @@
+{
+    "name": "internap/php-first-app-guide-stepped",
+    "description": "OpenStack first app guide - step by step version for PHP",
+    "autoload": {
+        "psr-4": {
+            "FirstAppGuide\\": "src/"
+        }
+    },
+    "require": {
+        "php-opencloud/openstack": "^2.0",
+	"symfony/yaml": "^3.1"
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Bruno Morel",
+            "email": "bmorel@internap.com"
+        }
+    ]
+}

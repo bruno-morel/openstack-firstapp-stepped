@@ -1,0 +1,16 @@
+{
+  "name": "openstack-nodejs-first-app-guide",
+  "version": "1.0.0",
+  "description": "OpenStack first app guide for node.js, splitted",
+  "main": "index.js",
+  "dependencies": {
+      "pkgcloud" : ">=1.3.0",
+      "lodash" : ">=4.0.0"
+  },
+  "devDependencies": { "winston" : ">=2.2.0"},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bruno Morel (bmorel@internap.com)",
+  "license": "ISC"
+}
