@@ -23,29 +23,30 @@ $openstack = new OpenStack\OpenStack([
 # step-9
 echo 'Checking for existing SSH key pair...';
 $keypair_name     = 'demokey';
-$pub_key_file     = '/Users/bmorel/.ssh/bmorel@internap.com-id_rsa.pub';
+$pub_key_file     = '/Users/bmorel/.ssh/bmorel@internap.com-key.pub';
 
 
 $nova = $openstack->computeV2();
 $keypair_exists = False;
 foreach( $nova->listKeypairs() as $keypair ) {
-    if ($keypair->getName() == $keypair_name) {
+    if ($keypair->name == $keypair_name) {
         $keypair_exists = True;
     }
 }
 
 if ($keypair_exists) {
-    echo 'Keypair ' . $keypair_name . ' already exists. Skipping import.';
+    echo " \tkeypair " . $keypair_name . " already exists. Skipping import.\n";
 } else {
-    echo 'adding keypair...';
-    $nova->keypair()->create(array(
-       'name' => $keypair_name,
-       'publicKey' => file_get_contents($pub_key_file)
-   ));
+    echo " \tadding keypair...";
+    $nova->createKeypair([
+      'name'      => $keypair_name,
+      'publicKey' => file_get_contents($pub_key_file)
+    ]);
 }
 
+echo( "Listing keypairs...\n" );
 foreach ($nova->listKeypairs() as $keypair) {
-    echo $keypair->getName() . "\n";
+    echo $keypair->name . "\n";
 }
 
 echo( "Done! Congrats\n" );

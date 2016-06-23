@@ -246,16 +246,16 @@
         },
         {
             "name": "php-opencloud/common",
-            "version": "v1.0.3",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-opencloud/common.git",
-                "reference": "e1cfdfe6ce5a37427e6298bb077094424cbb18e4"
+                "reference": "078508c96b6b30a9afbed06a853c4926784fb644"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-opencloud/common/zipball/e1cfdfe6ce5a37427e6298bb077094424cbb18e4",
-                "reference": "e1cfdfe6ce5a37427e6298bb077094424cbb18e4",
+                "url": "https://api.github.com/repos/php-opencloud/common/zipball/078508c96b6b30a9afbed06a853c4926784fb644",
+                "reference": "078508c96b6b30a9afbed06a853c4926784fb644",
                 "shasum": ""
             },
             "require": {
@@ -287,27 +287,27 @@
                     "homepage": "https://github.com/jamiehannaford"
                 }
             ],
-            "time": "2016-04-11 10:06:13"
+            "time": "2016-06-22 10:06:32"
         },
         {
             "name": "php-opencloud/openstack",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-opencloud/openstack.git",
-                "reference": "79b59e0f7ec280e10cb344d6dd60f34a763a257e"
+                "reference": "f14f84de2b2c5be1edb93b2c6ff5e1d56e0809f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-opencloud/openstack/zipball/79b59e0f7ec280e10cb344d6dd60f34a763a257e",
-                "reference": "79b59e0f7ec280e10cb344d6dd60f34a763a257e",
+                "url": "https://api.github.com/repos/php-opencloud/openstack/zipball/f14f84de2b2c5be1edb93b2c6ff5e1d56e0809f3",
+                "reference": "f14f84de2b2c5be1edb93b2c6ff5e1d56e0809f3",
                 "shasum": ""
             },
             "require": {
-                "php-opencloud/common": "~1.0"
+                "php-opencloud/common": "^1.0.5"
             },
             "require-dev": {
-                "fabpot/php-cs-fixer": "~1.0",
+                "friendsofphp/php-cs-fixer": "^1.0",
                 "jakub-onderka/php-parallel-lint": "0.*",
                 "phpunit/phpunit": "~4.0",
                 "psr/log": "~1.0",
@@ -328,7 +328,7 @@
                     "homepage": "https://github.com/jamiehannaford"
                 }
             ],
-            "time": "2016-04-11 12:12:11"
+            "time": "2016-06-22 11:06:17"
         },
         {
             "name": "psr/http-message",
