@@ -68,6 +68,7 @@ function handleServerCreation( err, server) {
         console.log('SERVER ' + server.name + ' IS ACTIVE!' );
         openstack.getServer( server.id, function (err, server ){
             console.log( 'Server details : ' + JSON.stringify( server ));
+            console.log( "Done! Congrats" );
         });
     });
 }

@@ -6,6 +6,7 @@ import os_client_config
 
 
 security_group_name             = 'all-in-one'
+security_group_description      = 'network access for all-in-one application.'
 
 
 cloud_config = os_client_config.OpenStackConfig().get_one_cloud(
@@ -31,7 +32,7 @@ if security_group_exists:
     print(' security Group ' + all_in_one_security_group.name + ' already exists. Skipping creation.')
 else:
     print(' creating security group ' + security_group_name)
-    all_in_one_security_group = conn.ex_create_security_group(security_group_name, 'network access for all-in-one application.')
+    all_in_one_security_group = conn.ex_create_security_group(security_group_name, security_group_description)
     conn.ex_create_security_group_rule(all_in_one_security_group, 'TCP', 80, 80)
     conn.ex_create_security_group_rule(all_in_one_security_group, 'TCP', 22, 22)
 

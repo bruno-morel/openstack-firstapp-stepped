@@ -40,6 +40,7 @@ function listingKeyPairs( ) {
     for( var currentKeyPairIndex = 0, len = keypairs.length; currentKeyPairIndex < len; currentKeyPairIndex++ ) {
       keypair = keypairs[ currentKeyPairIndex ][ 'keypair' ];
       console.log( " \t- key found with name : " + keypair.name + "\t and fingerprint : " + keypair.fingerprint );
+      console.log( "Done! Congrats" );
     }
   });
 }
