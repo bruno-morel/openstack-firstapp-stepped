@@ -30,8 +30,7 @@ openstack.getImages(function (err, images)
 
         // Pick the smallest instance flavor
         var flavor = null;
-        for( var currentFlavorIndex = 0, len = flavors.length; currentFlavorIndex < len; currentFlavorIndex++ )
-        {
+        for( var currentFlavorIndex = 0, len = flavors.length; currentFlavorIndex < len; currentFlavorIndex++ ) {
             if( flavors[ currentFlavorIndex ].id != null &&
                 flavors[ currentFlavorIndex ].id == 'A1.1' )
                 flavor = flavors[ currentFlavorIndex ];

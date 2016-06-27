@@ -16,14 +16,13 @@ openstack.getFlavors(function (err, flavors)
 
     console.log( "Listing flavors..." );
     var flavor = null;
-    for( var currentFlavorIndex = 0, len = flavors.length; currentFlavorIndex < len; currentFlavorIndex++ )
-    {
+    for( var currentFlavorIndex = 0, len = flavors.length; currentFlavorIndex < len; currentFlavorIndex++ ) {
         flavor = flavors[ currentFlavorIndex ];
         if( flavor.id != null &&
             flavor.id == 'A1.1' )
-          console.log( flavor.id + '     ' + flavor.name + ' <------- this is our flavor' );
+          console.log( flavor.id + " \t" + flavor.name + ' <------- this is our flavor' );
         else
-          console.log( flavor.id + '     ' + flavor.name );
+          console.log( flavor.id + " \t" + flavor.name );
     }
     console.log( "Done! Congrats" );
 });

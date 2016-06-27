@@ -19,9 +19,9 @@ openstack.getNetworks(function (err, networks) {
       network = networks[ currentNetworkIndex ];
       if( network.label != null &&
           network.label.indexOf( 'WAN' ) > 0 )
-          console.log( network.id + '     ' + network.label + ' <------- this is our WAN network' );
+          console.log( network.id + " \t" + network.label + ' <------- this is our WAN network' );
       else
-          console.log( network.id + '     ' + network.label );
+          console.log( network.id + " \t" + network.label );
     }
     console.log( "Done! Congrats" );
 });

@@ -14,7 +14,7 @@ for network in networks:
     if "WAN" in network["name"]:
         netWAN_id = network["id"]
 
-instance_name = 'MySecondVM'
+instance_name = 'second test instance for shade'
 testing_instance = conn.create_server(wait=True, auto_ip=True,
                                       name=instance_name,
                                       image=image_id,

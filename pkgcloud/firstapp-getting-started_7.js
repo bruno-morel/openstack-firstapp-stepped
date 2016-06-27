@@ -10,28 +10,11 @@ var openstack = pkgcloud.compute.createClient({
     region:       config[ "clouds" ][ "internap" ][ "region_name" ]
 });
 
-openstack.getImages(function (err, images)
-{
+openstack.getImage( '3c76334f-9644-4666-ac3c-fa090f175655', function (err, image) {
     if( err ) { console.log(err); return; }
 
-    // Pick an image based on Ubuntu 14.04
-    var image = null;
-    for( var currentImageIndex = 0, len = images.length; currentImageIndex  < len; currentImageIndex++ ) {
-        if( images[ currentImageIndex  ].id != null &&
-            images[ currentImageIndex  ].id == '3c76334f-9644-4666-ac3c-fa090f175655' )
-            image = images[ currentImageIndex  ];
-    }
-
-    openstack.getFlavors(function (err, flavors) {
+    openstack.getFlavor( 'A1.1', function (err, flavor) {
         if( err ) { console.log(err); return; }
-
-        // Pick the smallest instance flavor
-        var flavor = null;
-        for( var currentFlavorIndex = 0, len = flavors.length; currentFlavorIndex < len; currentFlavorIndex++ ) {
-            if( flavors[ currentFlavorIndex ].id != null &&
-                flavors[ currentFlavorIndex ].id == 'A1.1' )
-                flavor = flavors[ currentFlavorIndex ];
-        }
 
         openstack.getNetworks(function (err, networks) {
             if( err ) { console.log(err); return; }
@@ -49,7 +32,7 @@ openstack.getImages(function (err, images)
             console.log( "\t network - " + netWAN.label + ' with UUID ' + netWAN.id );
 
             // Create our first server
-            openstack.createServer({  name: 'test server for pkgcloud',
+            openstack.createServer({  name: 'second test server for pkgcloud',
                                       image: image,
                                       flavor: flavor,
                                       networks: [{uuid:netWAN.id.toString()}] },

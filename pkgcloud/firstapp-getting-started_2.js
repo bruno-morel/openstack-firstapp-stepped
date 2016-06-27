@@ -16,14 +16,13 @@ openstack.getImages(function (err, images)
 
     console.log( "Listing images..." );
     var image = null;
-    for( var currentImageIndex = 0, len = images.length; currentImageIndex  < len; currentImageIndex++ )
-    {
+    for( var currentImageIndex = 0, len = images.length; currentImageIndex  < len; currentImageIndex++ ) {
       image = images[ currentImageIndex  ];
       if( image.id != null &&
           image.id == '3c76334f-9644-4666-ac3c-fa090f175655' )
-        console.log( image.id + '     ' + image.name + ' <------- this is our image' );
+        console.log( image.id + " \t" + image.name + ' <------- this is our image' );
       else
-        console.log( image.id + '     ' + image.name );
+        console.log( image.id + " \t" + image.name );
 
     }
     console.log( "Done! Congrats" );

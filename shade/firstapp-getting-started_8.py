@@ -5,7 +5,8 @@ conn = openstack_cloud(cloud='internap')
 
 servers = conn.list_servers()
 for server in servers:
-	print( '--> Deleting server with ID :' + server[ "id"] )
-	conn.delete_server( server[ "id" ] )
+	if "shade" in server[ "name" ]:
+    	print( '--> Deleting server with ID :' + server[ "id"] )
+		conn.delete_server( server[ "id" ] )
 
 print( 'Done! Congrats.' )

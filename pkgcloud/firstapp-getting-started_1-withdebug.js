@@ -45,4 +45,5 @@ openstack.on('log::*', function (message, object) {
 });
 
 console.log( JSON.stringify( openstack ) );
+console.log( openstack );
 console.log( "Done! Congrats" );
