@@ -77,20 +77,22 @@ func main() {
 	image, err := images.Get(nova, "3c76334f-9644-4666-ac3c-fa090f175655").Extract()
 
 	var netwan networks.Network
-	count := 0
 	err = networks.List(nova).EachPage(func(page pagination.Page) (bool, error) {
-		currentNetwork, err := networks.ExtractNetworks(page)
+		networkPage, err := networks.ExtractNetworks(page)
 		if err != nil {
 			return false, err
 		}
-		if strings.Contains(currentNetwork[count].Label, "WAN") {
-			netwan = currentNetwork[count]
+
+		for _, currentNetwork := range networkPage {
+			if strings.Contains(currentNetwork.Label, "WAN") {
+				netwan = currentNetwork
+			}
 		}
-		count++
+
 		return true, nil
 	})
 
-	server, err := servers.Create(nova, servers.CreateOpts{Name: "second test instance for gophercloud", FlavorRef: flavor.ID, ImageRef: image.ID, Networks: []servers.Network{servers.Network{UUID: netwan.ID}}}).Extract()
+	server, err := servers.Create(nova, servers.CreateOpts{Name: "test instance for gophercloud", FlavorRef: flavor.ID, ImageRef: image.ID, Networks: []servers.Network{servers.Network{UUID: netwan.ID}}}).Extract()
 	if err != nil {
 		fmt.Printf("Unable to create server: %s", err)
 	}

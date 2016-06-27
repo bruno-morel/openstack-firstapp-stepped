@@ -3,12 +3,11 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"strings"
 
 	"github.com/rackspace/gophercloud"
 	"github.com/rackspace/gophercloud/openstack"
-	"github.com/rackspace/gophercloud/openstack/compute/v2/extensions/networks"
-	"github.com/rackspace/gophercloud/pagination"
+	"github.com/rackspace/gophercloud/openstack/compute/v2/flavors"
+	"github.com/rackspace/gophercloud/openstack/compute/v2/images"
 	"github.com/smallfish/simpleyaml"
 )
 
@@ -69,24 +68,17 @@ func main() {
 		return
 	}
 
-	var netwan networks.Network
-	count := 0
-	err = networks.List(nova).EachPage(func(page pagination.Page) (bool, error) {
-		currentNetwork, err := networks.ExtractNetworks(page)
-		if err != nil {
-			return false, err
-		}
-
-		if strings.Contains(currentNetwork[count].Label, "WAN") {
-			netwan = currentNetwork[count]
-			fmt.Printf("Found WAN network %s with : %+v\n", netwan.Label, netwan)
-		}
-		count++
-
-		return true, nil
-	})
+	image, err := images.Get(nova, "3c76334f-9644-4666-ac3c-fa090f175655").Extract()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("Unable to find image: %s\n", err)
 		return
 	}
+	fmt.Printf("Selected image: %s\n", image)
+
+	flavor, err := flavors.Get(nova, "A1.1").Extract()
+	if err != nil {
+		fmt.Printf("Unable to find flavor: %s\n", err)
+		return
+	}
+	fmt.Printf("Selected flavor: %s\n", flavor)
 }

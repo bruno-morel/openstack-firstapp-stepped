@@ -8,6 +8,9 @@ import (
 	"github.com/rackspace/gophercloud"
 	"github.com/rackspace/gophercloud/openstack"
 	"github.com/rackspace/gophercloud/openstack/compute/v2/extensions/networks"
+	"github.com/rackspace/gophercloud/openstack/compute/v2/flavors"
+	"github.com/rackspace/gophercloud/openstack/compute/v2/images"
+	"github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/rackspace/gophercloud/pagination"
 	"github.com/smallfish/simpleyaml"
 )
@@ -69,7 +72,11 @@ func main() {
 		return
 	}
 
-	fmt.Println("Listing networks...")
+	flavor, err := flavors.Get(nova, "A1.1").Extract()
+
+	image, err := images.Get(nova, "3c76334f-9644-4666-ac3c-fa090f175655").Extract()
+
+	var netwan networks.Network
 	err = networks.List(nova).EachPage(func(page pagination.Page) (bool, error) {
 		networkPage, err := networks.ExtractNetworks(page)
 		if err != nil {
@@ -77,17 +84,30 @@ func main() {
 		}
 
 		for _, currentNetwork := range networkPage {
-			fmt.Printf("\t - found network with name : %s", currentNetwork.Label)
 			if strings.Contains(currentNetwork.Label, "WAN") {
-				fmt.Print("\t <-------this is our WAN network")
+				netwan = currentNetwork
 			}
-			fmt.Print("\n")
 		}
 
 		return true, nil
 	})
+
+	server, err := servers.Create(nova, servers.CreateOpts{Name: "second test instance for gophercloud", FlavorRef: flavor.ID, ImageRef: image.ID, Networks: []servers.Network{servers.Network{UUID: netwan.ID}}}).Extract()
 	if err != nil {
-		fmt.Println(err)
-		return
+		fmt.Printf("Unable to create server: %s", err)
 	}
+	fmt.Printf("Created server with ID: %s", server.ID)
+
+	servers.List(nova, servers.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
+		serverList, err := servers.ExtractServers(page)
+
+		if err != nil {
+			return false, err
+		}
+
+		for _, s := range serverList {
+			fmt.Println(s.ID, s.Name, s.Status)
+		}
+		return true, nil
+	})
 }
