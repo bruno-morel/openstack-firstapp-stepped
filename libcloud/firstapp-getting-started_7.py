@@ -5,7 +5,7 @@ from libcloud.compute.providers import get_driver
 import os_client_config
 
 
-instance_name = 'testing for libcloud - step 7'
+instance_name = 'second test instance for libcloud'
 
 
 cloud_config = os_client_config.OpenStackConfig().get_one_cloud(

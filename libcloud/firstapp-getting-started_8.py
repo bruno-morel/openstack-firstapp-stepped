@@ -19,7 +19,7 @@ conn = provider(cloud_config.config['auth']['username'],
 print( 'Destroying all test instances')
 instances = conn.list_nodes()
 for instance in instances:
-    if "testing for libcloud" in instance.name:
+    if "for libcloud" in instance.name:
         conn.destroy_node(instance)
 
 print( 'Done! Congrats!')

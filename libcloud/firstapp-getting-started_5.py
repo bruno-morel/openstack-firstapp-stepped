@@ -15,10 +15,12 @@ conn = provider(cloud_config.config['auth']['username'],
                 ex_tenant_name=cloud_config.config['auth']['project_name'],
                 ex_force_service_region=cloud_config.region)
 
-
-# step-5
-flavor_id = 'A1.1'
-flavor = conn.ex_get_size(flavor_id)
-print(flavor)
+print('Checking for WAN network...')
+nets = conn.ex_list_networks()
+for net in nets:
+    if "WAN" in net.name:
+        print(net + '\t <-----this is our WAN LAN')
+    else:
+        print(net)
 
 print( 'Done! Congrats!')

@@ -15,10 +15,9 @@ conn = provider(cloud_config.config['auth']['username'],
                 ex_tenant_name=cloud_config.config['auth']['project_name'],
                 ex_force_service_region=cloud_config.region)
 
-print('Checking for WAN network...')
-nets = conn.ex_list_networks()
-for net in nets:
-    if "WAN" in net.name:
-        print(net)
-
+# step-2
+images = conn.list_images()
+for image in images:
+    print(image)
+    
 print( 'Done! Congrats!')
