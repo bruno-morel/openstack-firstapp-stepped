@@ -1,19 +1,18 @@
 var pkgcloud = require('pkgcloud');
+var yaml = require('yamljs');
 
-var client = pkgcloud.compute.createClient({
-    provider:     'YOURPROVIERNAME',
-    username:     'APILOGIN',
-    password:     'APIPASS',
-    authUrl:      'https://identity.api.cloud.iweb.com/',
-    region:       'nyj01'
+var config = yaml.load( 'clouds.yaml' );
+var openstack = pkgcloud.compute.createClient({
+    provider:     "openstack",
+    username:     config[ "clouds" ][ "internap" ][ "auth" ].username,
+    password:     config[ "clouds" ][ "internap" ][ "auth" ].password,
+    authUrl:      config[ "clouds" ][ "internap" ][ "authUrl" ],
+    region:       config[ "clouds" ][ "internap" ][ "region_name" ]
 });
 
-client.getImages(function (err, images)
+openstack.getImages(function (err, images)
 {
-    if (err) {
-        console.dir(err);
-        return;
-    }
+    if (err) { console.log(err); return; }
 
     // Pick an image based on Ubuntu 14.04
     var image = null;
@@ -23,14 +22,11 @@ client.getImages(function (err, images)
             images[ currentImageIndex  ].id == '3c76334f-9644-4666-ac3c-fa090f175655' )
             image = images[ currentImageIndex  ];
     }
-    console.dir( image );
+    console.log( 'Selected image : ' +  JSON.stringify( image ) );
 
-    client.getFlavors(function (err, flavors)
+    openstack.getFlavors(function (err, flavors)
     {
-        if (err) {
-            console.dir(err);
-            return;
-        }
+        if (err) { console.log(err); return; }
 
         // Pick the smallest instance flavor
         var flavor = null;
@@ -40,6 +36,7 @@ client.getImages(function (err, images)
                 flavors[ currentFlavorIndex ].id == 'A1.1' )
                 flavor = flavors[ currentFlavorIndex ];
         }
-        console.dir( flavor );
+        console.log( 'Selected flavor : ' + JSON.stringify( flavor ) );
+        console.log( "Done! Congrats" );
     });
 });

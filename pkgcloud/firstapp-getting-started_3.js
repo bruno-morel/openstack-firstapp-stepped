@@ -1,23 +1,29 @@
 var pkgcloud = require('pkgcloud');
+var yaml = require('yamljs');
 
-var client = pkgcloud.compute.createClient({
-    provider:     'YOURPROVIERNAME',
-    username:     'APILOGIN',
-    password:     'APIPASS',
-    authUrl:      'https://identity.api.cloud.iweb.com/',
-    region:       'nyj01'
+var config = yaml.load( 'clouds.yaml' );
+var openstack = pkgcloud.compute.createClient({
+    provider:     "openstack",
+    username:     config[ "clouds" ][ "internap" ][ "auth" ].username,
+    password:     config[ "clouds" ][ "internap" ][ "auth" ].password,
+    authUrl:      config[ "clouds" ][ "internap" ][ "authUrl" ],
+    region:       config[ "clouds" ][ "internap" ][ "region_name" ]
 });
 
-client.getFlavors(function (err, flavors)
+openstack.getFlavors(function (err, flavors)
 {
-    if( err ) { console.dir(err); return; }
-    console.dir( flavors );
+    if( err ) { console.log(err); return; }
 
+    console.log( "Listing flavors..." );
     var flavor = null;
     for( var currentFlavorIndex = 0, len = flavors.length; currentFlavorIndex < len; currentFlavorIndex++ )
     {
-        if( flavors[ currentFlavorIndex ].id != null &&
-            flavors[ currentFlavorIndex ].id == 'A1.1' )
-            flavor = flavors[ currentFlavorIndex ];
+        flavor = flavors[ currentFlavorIndex ];
+        if( flavor.id != null &&
+            flavor.id == 'A1.1' )
+          console.log( flavor.id + '     ' + flavor.name + ' <------- this is our flavor' );
+        else
+          console.log( flavor.id + '     ' + flavor.name );
     }
+    console.log( "Done! Congrats" );
 });

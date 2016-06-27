@@ -1,21 +1,27 @@
 var pkgcloud = require('pkgcloud');
+var yaml = require('yamljs');
 
-var client = pkgcloud.compute.createClient({
-    provider:     'YOURPROVIERNAME',
-    username:     'APILOGIN',
-    password:     'APIPASS',
-    authUrl:      'https://identity.api.cloud.iweb.com/',
-    region:       'nyj01'
+var config = yaml.load( 'clouds.yaml' );
+var openstack = pkgcloud.compute.createClient({
+    provider:     "openstack",
+    username:     config[ "clouds" ][ "internap" ][ "auth" ].username,
+    password:     config[ "clouds" ][ "internap" ][ "auth" ].password,
+    authUrl:      config[ "clouds" ][ "internap" ][ "authUrl" ],
+    region:       config[ "clouds" ][ "internap" ][ "region_name" ]
 });
 
-client.getNetworks(function (err, networks) {
-    if (err) { console.dir(err); return; }
-    console.dir( networks );
+openstack.getNetworks(function (err, networks) {
+    if (err) { console.log(err); return; }
 
-    var netWAN = null;
+    console.log( "Listing networks..." );
+    var network = null;
     for( var currentNetworkIndex = 0, len = networks.length; currentNetworkIndex < len; currentNetworkIndex++ ) {
-        if( networks[ currentNetworkIndex   ].label != null &&
-            networks[ currentNetworkIndex   ].label.indexOf( 'WAN' ) )
-            netWAN = networks[ currentNetworkIndex   ];
+      network = networks[ currentNetworkIndex ];
+      if( network.label != null &&
+          network.label.indexOf( 'WAN' ) > 0 )
+          console.log( network.id + '     ' + network.label + ' <------- this is our WAN network' );
+      else
+          console.log( network.id + '     ' + network.label );
     }
+    console.log( "Done! Congrats" );
 });

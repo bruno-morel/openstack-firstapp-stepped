@@ -1,23 +1,30 @@
 var pkgcloud = require('pkgcloud');
+var yaml = require('yamljs');
 
-var client = pkgcloud.compute.createClient({
-    provider:     'YOURPROVIERNAME',
-    username:     'APILOGIN',
-    password:     'APIPASS',
-    authUrl:      'https://identity.api.cloud.iweb.com/',
-    region:       'nyj01'
+var config = yaml.load( 'clouds.yaml' );
+var openstack = pkgcloud.compute.createClient({
+    provider:     "openstack",
+    username:     config[ "clouds" ][ "internap" ][ "auth" ].username,
+    password:     config[ "clouds" ][ "internap" ][ "auth" ].password,
+    authUrl:      config[ "clouds" ][ "internap" ][ "authUrl" ],
+    region:       config[ "clouds" ][ "internap" ][ "region_name" ]
 });
 
-client.getImages(function (err, images)
+openstack.getImages(function (err, images)
 {
-    if( err ) { console.dir(err); return; }
-    console.dir( images );
+    if( err ) { console.log(err); return; }
 
+    console.log( "Listing images..." );
     var image = null;
     for( var currentImageIndex = 0, len = images.length; currentImageIndex  < len; currentImageIndex++ )
     {
-        if( images[ currentImageIndex  ].id != null &&
-            images[ currentImageIndex  ].id == '3c76334f-9644-4666-ac3c-fa090f175655' )
-            image = images[ currentImageIndex  ];
+      image = images[ currentImageIndex  ];
+      if( image.id != null &&
+          image.id == '3c76334f-9644-4666-ac3c-fa090f175655' )
+        console.log( image.id + '     ' + image.name + ' <------- this is our image' );
+      else
+        console.log( image.id + '     ' + image.name );
+
     }
+    console.log( "Done! Congrats" );
 });
