@@ -60,11 +60,11 @@ func main() {
 		return
 	}
 
-	compute, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{Region: config.Region})
+	nova, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{Region: config.Region})
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Printf("Successfully authenticated with : %v\n", compute)
+	fmt.Printf("Successfully authenticated with : %v\n", nova)
 }

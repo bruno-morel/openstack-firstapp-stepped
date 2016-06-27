@@ -62,13 +62,13 @@ func main() {
 		return
 	}
 
-	compute, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{Region: config.Region})
+	nova, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{Region: config.Region})
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	err = images.ListDetail(compute, images.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
+	err = images.ListDetail(nova, images.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
 		imageList, err := images.ExtractImages(page)
 		if err != nil {
 			return false, err
@@ -79,6 +79,6 @@ func main() {
 		}
 		return true, nil
 	})
-	image, err := images.Get(compute, "3c76334f-9644-4666-ac3c-fa090f175655").Extract()
+	image, err := images.Get(nova, "3c76334f-9644-4666-ac3c-fa090f175655").Extract()
 	fmt.Printf("Image selected %v\n", image)
 }

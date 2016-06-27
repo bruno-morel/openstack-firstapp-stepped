@@ -66,13 +66,13 @@ func main() {
 		return
 	}
 
-	compute, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{Region: config.Region})
+	nova, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{Region: config.Region})
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	flavors.ListDetail(compute, flavors.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
+	flavors.ListDetail(nova, flavors.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
 		flavorList, err := flavors.ExtractFlavors(page)
 		if err != nil {
 			return false, err
@@ -82,9 +82,9 @@ func main() {
 		}
 		return true, nil
 	})
-	flavor, err := flavors.Get(compute, "A1.1").Extract()
+	flavor, err := flavors.Get(nova, "A1.1").Extract()
 
-	err = images.ListDetail(compute, images.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
+	err = images.ListDetail(nova, images.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
 		imageList, err := images.ExtractImages(page)
 		if err != nil {
 			return false, err
@@ -95,11 +95,11 @@ func main() {
 		}
 		return true, nil
 	})
-	image, err := images.Get(compute, "3c76334f-9644-4666-ac3c-fa090f175655").Extract()
+	image, err := images.Get(nova, "3c76334f-9644-4666-ac3c-fa090f175655").Extract()
 
 	var netwan networks.Network
 	count := 0
-	err = networks.List(compute).EachPage(func(page pagination.Page) (bool, error) {
+	err = networks.List(nova).EachPage(func(page pagination.Page) (bool, error) {
 		currentNetwork, err := networks.ExtractNetworks(page)
 		if err != nil {
 			return false, err
@@ -113,13 +113,13 @@ func main() {
 		return true, nil
 	})
 
-	server, err := servers.Create(compute, servers.CreateOpts{Name: "test VM with gophercloud", FlavorRef: flavor.ID, ImageRef: image.ID, Networks: []servers.Network{servers.Network{UUID: netwan.ID}}}).Extract()
+	server, err := servers.Create(nova, servers.CreateOpts{Name: "test instance for gophercloud", FlavorRef: flavor.ID, ImageRef: image.ID, Networks: []servers.Network{servers.Network{UUID: netwan.ID}}}).Extract()
 	if err != nil {
 		fmt.Printf("Unable to create server: %s", err)
 	}
 	fmt.Printf("Created server with ID: %s", server.ID)
 
-	servers.List(compute, servers.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
+	servers.List(nova, servers.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
 		serverList, err := servers.ExtractServers(page)
 
 		if err != nil {

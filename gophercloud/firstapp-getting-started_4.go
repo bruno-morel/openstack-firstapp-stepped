@@ -63,7 +63,7 @@ func main() {
 		return
 	}
 
-	compute, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{Region: config.Region})
+	nova, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{Region: config.Region})
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -71,7 +71,7 @@ func main() {
 
 	var netwan networks.Network
 	count := 0
-	err = networks.List(compute).EachPage(func(page pagination.Page) (bool, error) {
+	err = networks.List(nova).EachPage(func(page pagination.Page) (bool, error) {
 		currentNetwork, err := networks.ExtractNetworks(page)
 		if err != nil {
 			return false, err
