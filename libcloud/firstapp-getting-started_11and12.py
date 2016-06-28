@@ -2,7 +2,7 @@ from libcloud.compute.types import Provider
 from libcloud.compute.providers import get_driver
 import os_client_config
 
-instance_name                   = 'testing for libcloud - step 12'
+instance_name                   = 'testing for libcloud'
 keypair_name                    = 'demokey'
 security_group_name             = 'all-in-one'
 
