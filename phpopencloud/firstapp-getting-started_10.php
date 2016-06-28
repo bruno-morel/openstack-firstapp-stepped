@@ -42,6 +42,7 @@ if ($security_group_exists) {
         'name'        => $security_group_name,
         'description' => $security_group_description,
     ]);
+    $neutron->createRule
 }
 
 echo( "Listing security groups...\n" );
