@@ -7,6 +7,7 @@ import (
 
 	"github.com/rackspace/gophercloud"
 	"github.com/rackspace/gophercloud/openstack"
+	"github.com/rackspace/gophercloud/openstack/compute/v2/extensions/keypairs"
 	"github.com/rackspace/gophercloud/openstack/compute/v2/extensions/networks"
 	"github.com/rackspace/gophercloud/openstack/compute/v2/extensions/secgroups"
 	"github.com/rackspace/gophercloud/openstack/compute/v2/images"
@@ -68,7 +69,7 @@ func main() {
 	}
 
 	const instanceName string = "testing for gophercloud"
-	const keypaiName string = "demokey"
+	const keypairName string = "demokey"
 	const secgroupName string = "all-in-one"
 	const secgroupDescription string = "network access for all-in-one application."
 
@@ -165,7 +166,8 @@ func main() {
 		return
 	}
 	fmt.Println("Creating instance...")
-	server, err := servers.Create(nova, servers.CreateOpts{Name: instanceName, FlavorRef: flavor.ID, ImageRef: image.ID, UserData: []byte(userdata), Networks: netWAN}).Extract()
+
+	server, err := servers.Create(nova, keypairs.CreateOptsExt{servers.CreateOpts{Name: instanceName, FlavorRef: flavor.ID, ImageRef: image.ID, UserData: []byte(userdata), Networks: netWAN, SecurityGroups: []string{secgroupName}}, keypairName}).Extract()
 	if err != nil {
 		fmt.Printf("\tunable to create server: %s", err)
 	}
