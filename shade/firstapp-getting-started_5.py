@@ -1,7 +1,7 @@
 from shade import *
 
 simple_logging(debug=True)
-conn = openstack_cloud(cloud='internap')
+conn = openstack_cloud(cloud='internapNYJ')
 
 networks = conn.list_networks()
 for network in networks:

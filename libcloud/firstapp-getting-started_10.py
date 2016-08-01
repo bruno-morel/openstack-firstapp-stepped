@@ -10,7 +10,7 @@ security_group_description      = 'network access for all-in-one application.'
 
 
 cloud_config = os_client_config.OpenStackConfig().get_one_cloud(
-    'internap', region_name='nyj01')
+    'internapNYJ', region_name='nyj01')
 
 provider = get_driver(Provider.OPENSTACK)
 conn = provider(cloud_config.config['auth']['username'],

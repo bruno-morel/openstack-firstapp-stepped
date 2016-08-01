@@ -8,7 +8,7 @@ keypair_name                    = 'demokey'
 pub_key_file                    = '/Users/bmorel/.ssh/bmorel@internap.com-key.pub'
 
 cloud_config = os_client_config.OpenStackConfig().get_one_cloud(
-    'internap', region_name='nyj01')
+    'internapNYJ', region_name='nyj01')
 
 provider = get_driver(Provider.OPENSTACK)
 conn = provider(cloud_config.config['auth']['username'],

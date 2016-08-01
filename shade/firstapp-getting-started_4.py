@@ -1,7 +1,7 @@
 from shade import *
 
 simple_logging(debug=True)
-conn = openstack_cloud(cloud='internap')
+conn = openstack_cloud(cloud='internapNYJ')
 
 
 image_id = 'f4bcad12-5668-44f7-9ceb-dfd9c00beee0'

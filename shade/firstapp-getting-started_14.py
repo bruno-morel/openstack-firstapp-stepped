@@ -3,7 +3,7 @@ from shade import *
 
 
 simple_logging(debug=True)
-conn = openstack_cloud(cloud='internap')
+conn = openstack_cloud(cloud='internapNYJ')
 
 instance_name = 'all-in-one'
 

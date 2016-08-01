@@ -2,7 +2,7 @@ from shade import *
 
 
 simple_logging(debug=True)
-conn = openstack_cloud(cloud='internap')
+conn = openstack_cloud(cloud='internapNYJ')
 
 #step-10
 print('Checking for existing security groups...')

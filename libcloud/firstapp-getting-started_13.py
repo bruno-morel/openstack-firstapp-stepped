@@ -3,11 +3,11 @@ from libcloud.compute.providers import get_driver
 import os_client_config
 
 
-instance_name                   = 'testing for libcloud - step 12'
+instance_name                   = 'testing for libcloud'
 
 
 cloud_config = os_client_config.OpenStackConfig().get_one_cloud(
-    'internap', region_name='nyj01')
+    'internapNYJ', region_name='nyj01')
 
 provider = get_driver(Provider.OPENSTACK)
 conn = provider(cloud_config.config['auth']['username'],

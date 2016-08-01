@@ -2,12 +2,12 @@ from shade import *
 
 
 simple_logging(debug=True)
-conn = openstack_cloud(cloud='internap')
+conn = openstack_cloud(cloud='internapNYJ')
 
 #step-9
 print('Checking for existing SSH keypair...')
 keypair_name = 'demokey'
-pub_key_file = '/Users/bmorel/.ssh/bmorel@internap.com-id_rsa.pub'
+pub_key_file = '/Users/bmorel/.ssh/bmorel@internap.com-key.pub'
 
 if conn.search_keypairs(keypair_name):
     print('Keypair already exists. Skipping import.')

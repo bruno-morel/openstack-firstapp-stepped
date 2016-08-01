@@ -30,23 +30,23 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	config.AuthURL, err = yaml.Get("clouds").Get("internap").Get("authUrl").String()
+	config.AuthURL, err = yaml.Get("clouds").Get("internapNYJ").Get("authUrl").String()
 	if err != nil {
 		panic(err)
 	}
-	config.UserName, err = yaml.Get("clouds").Get("internap").Get("auth").Get("username").String()
+	config.UserName, err = yaml.Get("clouds").Get("internapNYJ").Get("auth").Get("username").String()
 	if err != nil {
 		panic(err)
 	}
-	config.Password, err = yaml.Get("clouds").Get("internap").Get("auth").Get("password").String()
+	config.Password, err = yaml.Get("clouds").Get("internapNYJ").Get("auth").Get("password").String()
 	if err != nil {
 		panic(err)
 	}
-	config.ProjetOrTenant, err = yaml.Get("clouds").Get("internap").Get("auth").Get("project_name").String()
+	config.ProjetOrTenant, err = yaml.Get("clouds").Get("internapNYJ").Get("auth").Get("project_name").String()
 	if err != nil {
 		panic(err)
 	}
-	config.Region, err = yaml.Get("clouds").Get("internap").Get("region_name").String()
+	config.Region, err = yaml.Get("clouds").Get("internapNYJ").Get("region_name").String()
 	if err != nil {
 		panic(err)
 	}

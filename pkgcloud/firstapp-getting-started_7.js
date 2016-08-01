@@ -4,10 +4,10 @@ var yaml = require('yamljs');
 var config = yaml.load( 'clouds.yaml' );
 var openstack = pkgcloud.compute.createClient({
     provider:     "openstack",
-    username:     config[ "clouds" ][ "internap" ][ "auth" ].username,
-    password:     config[ "clouds" ][ "internap" ][ "auth" ].password,
-    authUrl:      config[ "clouds" ][ "internap" ][ "authUrl" ],
-    region:       config[ "clouds" ][ "internap" ][ "region_name" ]
+    username:     config[ "clouds" ][ "internapNYJ" ][ "auth" ].username,
+    password:     config[ "clouds" ][ "internapNYJ" ][ "auth" ].password,
+    authUrl:      config[ "clouds" ][ "internapNYJ" ][ "authUrl" ],
+    region:       config[ "clouds" ][ "internapNYJ" ][ "region_name" ]
 });
 
 openstack.getImage( '3c76334f-9644-4666-ac3c-fa090f175655', function (err, image) {

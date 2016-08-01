@@ -10,7 +10,7 @@ appworker_name                  = 'app-worker'
 
 
 simple_logging(debug=True)
-conn = openstack_cloud(cloud='internap')
+conn = openstack_cloud(cloud='internapNYJ')
 
 networks = conn.list_networks()
 for network in networks:
@@ -21,7 +21,7 @@ print('Checking for controller instance...')
 for instance in conn.list_servers():
     if instance.name == appcontroller_name:
         controller_instance = instance
-        
+
 if controller_instance:
     if controller_instance.public_v4:
         controller_ip = controller_instance.public_v4

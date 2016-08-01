@@ -1,7 +1,7 @@
 from shade import *
 
 simple_logging(debug=True)
-conn = openstack_cloud(cloud='internap')
+conn = openstack_cloud(cloud='internapNYJ')
 
 flavor_id = 'A1.1'
 flavor = conn.get_flavor(flavor_id)
